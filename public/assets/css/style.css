@@ -1,0 +1,454 @@
+/* SF Pro Display font family */
+/*@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayLight.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayMedium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayHeavyItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayLightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplayBoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'SF Pro Display';
+  src: url('assets/fonts/SFProDisplaySemiboldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}*/
+html{
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* Navbar styles */
+header {
+  background-color: #00796b;
+  border-bottom: 1px solid white;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem;
+}
+
+.logo-name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 3.56px;
+  width: 67.27px;
+  height: 13px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.logo-name img {
+  width: 50px;
+  height: 30px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.logo-name h {
+  width: 46px;
+  height: 13px;
+  font-family: "SF Pro Display", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 13px;
+  color: #000000;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  padding: 0.5rem;
+  display: inline-block;
+}
+
+nav ul li:first-child {
+  margin-left: 0;
+}
+
+nav ul li a {
+  color: #000000;
+  font-family: "SF Pro Display", sans-serif;
+  font-style: normal;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 18px;
+}
+
+nav ul li a:hover {
+  color: #fff;
+  text-decoration: underline;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Hamburger menu styles */
+.menu-icon {
+  display: none;
+}
+
+#menu-toggle {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  header {
+    padding: 0.5rem;
+  }
+
+  .menu-icon {
+    display: block;
+    cursor: pointer;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 5rem;
+    left: 0;
+    width: 100%;
+    padding: 0;
+    background-color: gray;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    margin-top: -26.1px;
+  }
+
+  nav ul li a:hover {
+    color: #009688;
+    transition: color 0.3s ease-in-out;
+  }
+
+  #menu-toggle {
+    visibility: hidden;
+  }
+
+  #menu-toggle:checked ~ ul {
+    display: flex;
+  }
+}
+
+
+/* Hero section styles */
+.hero {
+  /*background-image: url('person.jpg');*/
+  background-color: white;
+  background-size: cover;
+  background-position: center;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start
+}
+
+.hero-text {
+  font-family: "SF Pro Display", sans-serif;
+  font-style: normal;
+  max-width: 600px;
+  margin-right: 2rem;
+  color: black;
+  order: 1;
+  /* Move the text to the left */
+}
+
+.hero-text h1 {
+  font-size: 64px;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  line-height: 125%;
+  letter-spacing: -0.222222px;
+}
+
+.hero-text p {
+  font-size: 20px;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+/*.hero-text button {
+    padding: 10px 30px;
+    gap: 7.11px;
+    width: 65.78px;
+    height: 20.44px;
+    left: 0px;
+    top: 158.22px;
+
+background: #0077C0;
+border-radius: 4.44444px;
+  }*/
+.hero-text button {
+  background: #00796b;
+  border: 0;
+  border-radius: 0.375rem;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "SF Pro Display", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 16px 20px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transform: translateZ(0) scale(1);
+  transition: transform 0.2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.hero-text button:disabled {
+  color: #787878;
+  cursor: auto;
+}
+
+.hero-text button:not(:disabled):hover {
+  transform: scale(1.05);
+}
+
+.hero-text button:not(:disabled):hover:active {
+  transform: scale(1.05) translateY(0.125rem);
+}
+
+.hero-text button:focus:not(:focus-visible) {
+  outline: 0 solid transparent;
+}
+
+.container img {
+  max-width: 400px;
+  order: 2;
+  /* Move the image to the right */
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    height: auto;
+    min-height: 500px;
+    padding: 2rem;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+
+  .hero-text {
+    margin-left: 0;
+    margin-top: 2rem;
+  }
+
+  .container img {
+    display: none;
+  }
+}
+
+.why-us {
+  font-family: "SF Pro Display", sans-serif;
+  background-color: #f2f2f2;
+  padding: 2rem;
+}
+
+.why-us-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.why-us-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.why-us-card {
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.why-us-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.why-us-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.why-us-cards h3 {
+  margin: 1rem 0;
+  color: #000000;
+  text-decoration: none; 
+
+}
+
+.why-us-card p {
+  margin: 0 1rem 1rem;
+  color: #666;
+  text-decoration: none; 
+}
+
+.footer {
+  background: #424242;
+  padding: 30px 0;
+  font-family: "SF Pro Display", sans-serif;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .row {
+  width: 100%;
+  margin: 1% 0%;
+  padding: 0.2% 0%;
+  color: #fff;
+  font-size: 0.8em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer .row a {
+  text-decoration: none;
+  color: #fff;
+  transition: 0.5s;
+  margin: 0 10px;
+}
+
+.footer .row a:hover {
+  color: #00796b;
+}
+
+.footer .row ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer .row ul li {
+  display: inline-block;
+  margin: 0px 30px;
+}
+
+.footer .row a i {
+  font-size: 2em;
+  margin: 0% 1%;
+}
+
+@media screen and (max-width: 768px) {
+  .footer {
+    text-align: left;
+    padding: 5%;
+    justify-content: flex-start;
+  }
+
+  .footer .row ul li {
+    display: block;
+    margin: 10px 0px;
+    text-align: left;
+  }
+
+  .footer .row a i {
+    margin: 0% 3%;
+  }
+}
+
+.footer .row a[title] {
+  position: relative;
+}
+
+.footer .row a[title]:hover:after {
+  content: attr(title);
+  display: inline-block;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00796b;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  z-index: 1;
+}

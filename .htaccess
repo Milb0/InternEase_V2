@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Deny access to app directory
+RewriteRule ^app/ - [R=403,L]
+
+# Redirect root URL to the public directory
+RewriteRule ^$ public/ [L]
+
+# Serve static files from the public directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/$1 [L]

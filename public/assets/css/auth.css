@@ -1,0 +1,154 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #00796b;
+  background-image: radial-gradient(
+    circle,
+    #00796b,
+    #00806f,
+    #008773,
+    #008e76,
+    #009579
+  );
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 430px;
+  width: 100%;
+  background: #fff;
+  border-radius: 7px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.container .form {
+  padding: 1.5rem;
+}
+
+.form header {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.form p {
+  font-size: 0.9rem;
+  font-weight: 520;
+  color: rgb(113, 113, 113);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+input,
+select,
+button {
+  height: 50px;
+  width: 100%;
+  padding: 0 15px;
+  font-size: 17px;
+  margin-bottom: 1.3rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+
+.form input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.error input {
+  border-color: red;
+  margin-bottom: 0rem;
+}
+
+.error input:focus {
+  box-shadow: none;
+}
+
+.verification_message, .HiddenInputMessage{
+  display: inline-block;
+  border: none;
+  background-color: #00b894;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  height: 75px;
+  width: 100%;
+  padding: 0 15px;
+  margin-bottom: 1.3rem;
+  border-radius: 6px;
+  outline: none;
+}
+.HiddenInputMessage {
+  background-color: #f94d4d;
+}
+.verification_message h,.HiddenInputMessage h {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+}
+
+button:disabled {
+  display: inline-block;
+  border: none;
+  background-color: gray;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+button:not(:disabled) {
+  display: inline-block;
+  border: none;
+  background-color: #009579;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+button:not(:disabled):hover {
+  background: #006653;
+}
+
+.signup {
+  font-size: 17px;
+  text-align: center;
+}
+
+.signup a {
+  color: #009579;
+  cursor: pointer;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
