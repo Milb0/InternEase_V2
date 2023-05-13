@@ -1,0 +1,7 @@
+$current_url = $_SERVER['REQUEST_URI'];
+$file_name = basename($current_url, '.php');
+$parts = explode('/', $file_name);
+$user_type = $parts[count($parts) - 2];
+
+// store the user type in a session variable
+$_SESSION['user_type'] = $user_type;
