@@ -120,4 +120,20 @@ document.addEventListener('DOMContentLoaded', function () {
     // Clear existing options
     gradeSelect.innerHTML = "";
 
+    // Add "Select Grade" option
+    var selectOption = document.createElement("option");
+    selectOption.value = "";
+    selectOption.disabled = true;
+    selectOption.selected = true;
+    selectOption.text = "Select Grade";
+    gradeSelect.appendChild(selectOption);
 
+    // Add custom options
+    options.forEach(function (optionValue) {
+      var option = document.createElement("option");
+      option.value = optionValue;
+      option.text = optionValue;
+      gradeSelect.appendChild(option);
+    });
+  }
+});
