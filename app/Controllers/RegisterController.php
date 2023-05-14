@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST["password"]))) {
         $password_err = "Please enter a password.";
         $errors["password_err"] = $password_err;
-    } elseif (strlen(trim($_POST["password"])) < 6) {
-        $password_err = "Password must have at least 6 characters.";
+    } elseif (strlen(trim($_POST["password"])) >= 8 && strlen(trim($_POST["password"])) <= 64) {
+        $password_err = "Password must be at least 8 characters and at most 64 characters";
         $errors["password_err"] = $password_err;
     } else {
         $password = trim($_POST["password"]);

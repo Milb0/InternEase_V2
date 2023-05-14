@@ -7,7 +7,7 @@ if (isset($_SESSION['user_type'])) {
     $who = $_SESSION['user_type'];
     redirect_unauthorized_user($who);
 }
-require_once BASE_DIR .'app/Controllers/RegisterController.php';
+require_once BASE_DIR . 'app/Controllers/RegisterController.php';
 ?>
 <div class="container">
     <div class="form">

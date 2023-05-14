@@ -2,16 +2,16 @@
 TODO: // Session User Authentication
 
 $email = $password = $user_type = $email_err = $password_err = "";
-$HiddenInputMessage=NULL;
+$HiddenInputMessage = NULL;
 $login_info = NULL;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $HiddenInputMessage=NULL;
-    $user_type=trim(filter_input(INPUT_POST,'identity',FILTER_SANITIZE_SPECIAL_CHARS));
+    $HiddenInputMessage = NULL;
+    $user_type = trim(filter_input(INPUT_POST, 'identity', FILTER_SANITIZE_SPECIAL_CHARS));
     switch ($user_type) {
         case 'student':
             require_once BASE_DIR . 'app/Models/Student.php';
-            
+
             $student = new Student();
             $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $email = trim($_POST['email']);
@@ -64,7 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             break;
         case 'internshipsupervisor':
             require_once BASE_DIR . 'app/Models/InternshipSupervisor.php';
+            require_once BASE_DIR . 'app/Models/Company.php';
             $InternshipSupervisor = new InternshipSupervisor();
+            $company= new Company();
             $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $email = trim($_POST['email']);
             if (validateEmail($email, $email_err, $login_info, $InternshipSupervisor)) {
@@ -77,21 +79,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     } else {
                         $_SESSION['user_type'] = 'internship-supervisor';
                         $_SESSION["email"] = $email;
-                        if (!($InternshipSupervisor->isFirstLogin($email))) {
-                            header('Location: ../internship-supervisor/dashboard.php');
+                        if ($InternshipSupervisor->isFirstLogin($email)) {
+                            $_SESSION["supervisor"] = $InternshipSupervisor->getInternshipSupervisor($email);
+                            $_SESSION["sup_company"] = $company->getCompany($_SESSION['supervisor']['company_id'],true);
+                            header("location:../internship-supervisor/complete-account.php");
                             exit;
                         } else {
-                            $_SESSION["supervisor"] = $InternshipSupervisor->getInternshipSupervisor($email);
-                            header("location:../internship-supervisor/complete-account.php");
+                            $_SESSION['ID'] = $InternshipSupervisor->getInternshipSupervisorID($email);
+                            $_SESSION['account_completed']=true;
+                            header('Location: ../internship-supervisor/dashboard.php');
                             exit;
                         }
                     }
                 }
             } else {
                 $email = NULL;
-            }            break;
+            }
+            break;
         default:
-        $HiddenInputMessage= "Something went wrong, Please try again.";
+            $HiddenInputMessage = "Something went wrong, Please try again.";
             break;
     }
 }
