@@ -37,7 +37,20 @@ class Student
             return false;
         }
     }
-    
+
+    public function getStudentID($email)
+    {
+        $sql = "SELECT id FROM student WHERE email = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        
+        if ($stmt->execute()) {
+            return $stmt->fetchColumn(0);
+        } else {
+            throw new Exception("Failed to execute query");
+        }
+    }
+
     public function isEmailTaken($email)
     {
         $sql = "SELECT id FROM student WHERE email = :email";
@@ -69,15 +82,15 @@ class Student
                 return $department_id;
             }
         } else {
-            throw new Exception("Failed to execute query");
+            throw new Exception("Try again please");
         }
     }
 
-    public function verifyStudent($email): bool
+    public function verifyStudent($id): bool
     {
-        $sql = "UPDATE student SET is_verified = 1 WHERE email = :email";
+        $sql = "UPDATE student SET is_verified = 1 WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             return true;
@@ -86,11 +99,11 @@ class Student
         }
     }
 
-    public function isVerified(string $email): bool
+    public function isVerified($id): bool
     {
-        $sql = "SELECT is_verified FROM student WHERE email = :email";
+        $sql = "SELECT is_verified FROM student WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             $is_verified = $stmt->fetchColumn(0);
@@ -100,11 +113,11 @@ class Student
         }
     }
 
-    public function getStudent($email)
+    public function getStudent($id)
     {
-        $sql = "SELECT * FROM student WHERE email = :email";
+        $sql = "SELECT * FROM student WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);      
     }
@@ -117,10 +130,10 @@ class Student
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getStudentVerificationCode($email){
-        $sql="SELECT verification_code FROM student WHERE email = :email";
+    public function getStudentVerificationCode($id){
+        $sql="SELECT verification_code FROM student WHERE id = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchColumn(0);
     }

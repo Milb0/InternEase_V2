@@ -87,5 +87,37 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+  var departmentSelect = document.getElementById("department");
+  var gradeSelect = document.getElementById("grade");
+
+  departmentSelect.addEventListener("change", function () {
+    var selectedDepartment = this.value;
+
+    while (gradeSelect.firstChild) {
+      gradeSelect.removeChild(gradeSelect.firstChild);
+    }
+
+    if (selectedDepartment !== "") {
+      showCustomSelect(selectedDepartment);
+      gradeSelect.style.display = "block";
+    } else {
+      gradeSelect.style.display = "none";
+    }
+  });
+
+  function showCustomSelect(selectedDepartment) {
+    var options = [];
+
+    if (selectedDepartment === "Mathematics and Informatics") {
+      options = ["L1", "L2"];
+    } else if (selectedDepartment === "Informatique Fondamentale et ses Applications") {
+      options = ["TI", "SCI", "M1 STIC", "M2 STIC", "M1 RSD", "M2 RSD"];
+    } else if (selectedDepartment === "Technologies des Logiciels et des Systèmes d'Information") {
+      options = ["GL", "SI", "M1 GL", "M2 SITW", "M1 GL", "M2 SITW"];
+    }
+
+    // Clear existing options
+    gradeSelect.innerHTML = "";
 
 

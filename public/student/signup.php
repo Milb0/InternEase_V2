@@ -45,6 +45,12 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
                     <span class="error"><?php echo $department_err; ?></span>
                 <?php endif; ?>
             </div>
+            <div>
+                <select name="grade" id="grade" style="display: none;">
+                                <option value="" disabled selected>Select department</option>
+    
+            </select>
+            </div>
             <button type="submit" id="submitBtn" disabled>Submit</button>
         </form>
         <div class="signup">

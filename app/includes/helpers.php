@@ -45,7 +45,7 @@ function send_email($email, $code)
 
 function redirect_unauthorized_user(string $user): void
 {
-    if (isset($_SESSION['email'])) {
+    if (isset($_SESSION['id'])) {
         $URL = "../{$user}/dashboard.php";
         header("Location: $URL");
         exit;

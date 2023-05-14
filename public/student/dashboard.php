@@ -9,6 +9,7 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
 } elseif (!isset($_SESSION['user_type'])) {
     header("Location:../whoami.php");
 }
+var_dump($_SESSION['id']);
 echo $_SESSION['LAST_ACTIVITY'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_unset();

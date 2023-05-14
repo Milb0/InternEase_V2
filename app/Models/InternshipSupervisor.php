@@ -161,12 +161,11 @@ class InternshipSupervisor
         $sql = "SELECT id FROM internship_supervisor WHERE email = :email";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-
-        if (!$stmt->execute()) {
-            // handle database error here, e.g. log the error
-            return null;
+        
+        if ($stmt->execute()) {
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
+            throw new Exception("Failed to execute query");
         }
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

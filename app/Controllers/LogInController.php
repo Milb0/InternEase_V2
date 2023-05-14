@@ -1,6 +1,4 @@
 <?php
-TODO: // Session User Authentication
-
 $email = $password = $user_type = $email_err = $password_err = "";
 $HiddenInputMessage = NULL;
 $login_info = NULL;
@@ -23,13 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if (!password_verify($password, $login_info['password_hashed'])) {
                         $password_err = "Incorrect password.";
                     } else {
-                        $_SESSION["email"] = $email;
-                        if ($student->isVerified($email)) {
+                        $_SESSION['id'] =$student->getStudentID($email);
+                        if ($student->isVerified($_SESSION['id'])) {
                             $_SESSION['user_type'] = 'student';
+                            include '../student/loading.html';
                             header('Location: ../student/dashboard.php');
                             exit;
                         } else {
-                            $_SESSION["verification_code"] = $student->getStudentVerificationCode("$email");
+                            $_SESSION["verification_code"] = $student->getStudentVerificationCode($_SESSION['id']);
                             header("location:../student/verification.php");
                             exit;
                         }
@@ -85,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             header("location:../internship-supervisor/complete-account.php");
                             exit;
                         } else {
-                            $_SESSION['ID'] = $InternshipSupervisor->getInternshipSupervisorID($email);
+                            $_SESSION['id'] = $InternshipSupervisor->getInternshipSupervisorID($email);
                             $_SESSION['account_completed']=true;
                             header('Location: ../internship-supervisor/dashboard.php');
                             exit;
