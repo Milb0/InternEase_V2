@@ -2,6 +2,7 @@
 $title = "InternEase - Dashboard";
 $style_file = "../assets/css/auth.css";
 require_once '../../app/includes/bootstrap.php';
+require_once BASE_DIR . 'app/includes/autoload.php';
 require_once BASE_DIR . 'app/includes/header.php';
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
     $who = $_SESSION['user_type'];
@@ -9,6 +10,8 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
 } elseif (!isset($_SESSION['user_type'])) {
     header("Location:../whoami.php");
 }
+$student = new Student();
+
 var_dump($_SESSION['id']);
 echo $_SESSION['LAST_ACTIVITY'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
