@@ -1,6 +1,7 @@
 <?php
 $title = "InternEase - Home";
 $style_file = "assets/css/style.css";
+$cssframewrok = '';
 require_once "../app/includes/header.php"; ?>
 <header>
     <nav>

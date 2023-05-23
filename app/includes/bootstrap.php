@@ -1,5 +1,5 @@
 <?php
-$timeout = 10000; // 30 minutes in seconds
+$timeout = 10000; // in seconds
 ini_set('session.gc_maxlifetime', $timeout);
 session_set_cookie_params($timeout);
 
@@ -23,3 +23,5 @@ $_SESSION['LAST_ACTIVITY'] = time();
 // Your other code here
 define('BASE_DIR', dirname(__DIR__) . '/../');
 require_once "helpers.php";
+require_once 'config.php';
+require_once 'autoload.php';

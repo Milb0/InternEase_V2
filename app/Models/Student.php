@@ -1,14 +1,10 @@
 <?php
-
-require_once __DIR__ . '/../includes/config.php';
-
 class Student
 {
     private $db;
 
-    public function __construct()
+    public function __construct($db_conn)
     {
-        global $db_conn;
         $this->db = $db_conn;
     }
 

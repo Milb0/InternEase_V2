@@ -1,6 +1,7 @@
 <?php
 $title = "InternEase - Identity";
 $style_file = "assets/css/whoami.css";
+$cssframewrok = '';
 require_once "../app/includes/header.php"; 
 require_once "../app/includes/bootstrap.php";
 ?>

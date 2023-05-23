@@ -10,6 +10,7 @@ TODO: //Implement Session User Authentication  //Verify if the verification code
 require_once '../../app/includes/bootstrap.php';
 $title = "InternEase - Verification";
 $style_file = "../assets/css/auth.css";
+$cssframewrok = '';
 require_once BASE_DIR . 'app/includes/header.php';
 if (!isset($_SESSION['verification_code'])) {
 header("Location: ../error.php?message=Verification code not set");

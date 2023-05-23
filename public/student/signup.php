@@ -1,6 +1,7 @@
 <?php
 $title = "InternEase - Sign Up";
 $style_file = "../assets/css/auth.css";
+$cssframewrok = '';
 require_once '../../app/includes/bootstrap.php';
 require_once BASE_DIR . 'app/includes/header.php';
 if (isset($_SESSION['user_type'])) {
@@ -35,7 +36,7 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
                 <span><?php echo $phone_err; ?></span>
             </div>
             <div>
-                <select name="department" id="department" required>
+            <select name="department" id="department" required>
                     <option value="" disabled selected>Select department</option>
                     <option value="Mathematics and Informatics" <?php echo ($department === "Mathematics and Informatics") ? "selected" : ""; ?>>Mathematics and Informatics</option>
                     <option value="Informatique Fondamentale et ses Applications" <?php echo ($department === "Informatique Fondamentale et ses Applications") ? "selected" : ""; ?>>Informatique Fondamentale et ses Applications</option>
@@ -47,7 +48,7 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
             </div>
             <div>
                 <select name="grade" id="grade" style="display: none;">
-                                <option value="" disabled selected>Select department</option>
+                                <option value="" disabled selected>Select a grade</option>
     
             </select>
             </div>
@@ -61,6 +62,6 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
     </div>
 </div>
 <?php
-$script_file = "../assets/js/app.js";
+$script_file = "../assets/js/app.js?v=<?php echo time(); ?>";
 require_once BASE_DIR . 'app/includes/footer.php';
 ?>

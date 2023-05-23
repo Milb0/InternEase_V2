@@ -1,6 +1,7 @@
 <?php
 $title = "InternEase - Log in";
 $style_file = "../assets/css/auth.css";
+$cssframewrok = '';
 require_once '../../app/includes/bootstrap.php';
 require_once BASE_DIR . 'app/includes/header.php';
 if (isset($_SESSION['user_type'])) {
