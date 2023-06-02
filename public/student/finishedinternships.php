@@ -1,5 +1,5 @@
 <?php
-$title = "InternEase - Dashboard";
+$title = "InternEase - Completed Internships";
 $style_file = "";
 $cssframewrok = '<script src="https://cdn.tailwindcss.com"></script>';
 require_once '../../app/includes/bootstrap.php';
@@ -24,8 +24,8 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
                     </svg>
                 </button>
                 <div class="flex ml-2 md:mr-24">
-                    <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded">
-                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo" />
+                    <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded dark:bg-opacity-0">
+                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo"/>
                     </div>
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">InternEase</span>
                 </div>
@@ -33,10 +33,10 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
             <div class="flex items-center">
                 <div class="relative ml-3">
                     <div>
-                        <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
-                            <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                        </button>
+                    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
+                    </button>
                     </div>
                     <div class="absolute right-0 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-user">
                         <div class="px-4 py-3" role="none">
@@ -49,13 +49,13 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
                         </div>
                         <ul class="py-1" role="none">
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                                <a href="dashboard.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
+                                <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" onclick="toggleSignOutModal()">Sign out</a>
                             </li>
                         </ul>
                     </div>
@@ -71,7 +71,6 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
             <li>
                 <a href="dashboard.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa fa-home"></i>
-
                     <span class="ml-3">Dashboard</span>
                 </a>
             </li>
@@ -90,13 +89,11 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
             <li>
                 <a href="contactus.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-envelope-open-text"></i>
-
                     <span class="flex-1 ml-3 whitespace-nowrap">Contact Us</span>
                 </a>
-
             </li>
             <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" onclick="toggleSignOutModal()">
+                <a class="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" onclick="toggleSignOutModal()">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Sign Out</span>
                 </a>

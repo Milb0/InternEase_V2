@@ -40,5 +40,4 @@ require_once "../app/includes/bootstrap.php";
 </main>
 
 <?php
-$script_file = "";
 require_once "../app/includes/footer.php"; ?>

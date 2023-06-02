@@ -1,6 +1,4 @@
 <?php
-ob_start(); // Start output buffering
-
 $title = "InternEase - Dashboard";
 $style_file = "";
 $cssframewrok = '<script src="https://cdn.tailwindcss.com"></script>';
@@ -14,16 +12,9 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
 } elseif (!isset($_SESSION['user_type'])) {
     header("Location:../whoami.php");
 }
-
-
 $student = new Student($db_conn);
 $result = $student->getStudent($_SESSION['id']);
-
-
-
 ?>
-<!-- component -->
-
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex items-center justify-between">
@@ -35,8 +26,8 @@ $result = $student->getStudent($_SESSION['id']);
                     </svg>
                 </button>
                 <div class="flex ml-2 md:mr-24">
-                    <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded">
-                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo" />
+                    <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded dark:bg-opacity-0">
+                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo"/>
                     </div>
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">InternEase</span>
                 </div>
@@ -44,10 +35,10 @@ $result = $student->getStudent($_SESSION['id']);
             <div class="flex items-center">
                 <div class="relative ml-3">
                     <div>
-                        <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
-                            <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                        </button>
+                    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
+                    </button>
                     </div>
                     <div class="absolute right-0 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-user">
                         <div class="px-4 py-3" role="none">
@@ -60,13 +51,13 @@ $result = $student->getStudent($_SESSION['id']);
                         </div>
                         <ul class="py-1" role="none">
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
+                                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
+                                <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" onclick="toggleSignOutModal()">Sign out</a>
                             </li>
                         </ul>
                     </div>
@@ -82,7 +73,6 @@ $result = $student->getStudent($_SESSION['id']);
             <li>
                 <a href="" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa fa-home"></i>
-
                     <span class="ml-3">Dashboard</span>
                 </a>
             </li>
@@ -101,13 +91,11 @@ $result = $student->getStudent($_SESSION['id']);
             <li>
                 <a href="contactus.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-envelope-open-text"></i>
-
                     <span class="flex-1 ml-3 whitespace-nowrap">Contact Us</span>
                 </a>
-
             </li>
             <li>
-                <a class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" onclick="toggleSignOutModal()">
+                <a class="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" onclick="toggleSignOutModal()">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Sign Out</span>
                 </a>
@@ -118,15 +106,19 @@ $result = $student->getStudent($_SESSION['id']);
 
 <div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700">
     <div class="p-4 mt-14">
-    <?php
-if (isset($_GET['Type'])) {
-    $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-    if($safeType==='0' || $safeType==='1'){displayAlert($safeType);}else{header("location:error404.php");}
-}
-?>
+        <?php
+        if (isset($_GET['Type'])) {
+            $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            if ($safeType === '0' || $safeType === '1' || $safeType === '5' || $safeType === '3') {
+                displayAlert($safeType);
+            } else {
+                header("location:error404.php");
+            }
+        }
+        ?>
         <div class="flex justify-end mb-4">
-            <a href="requestpage.php"><button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded hover:bg-blue-700">
-                    Add Internship
+            <a href="requestpage.php"><button class="px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded hover:bg-blue-700">
+                Submit Request
                 </button></a>
         </div>
 
@@ -136,7 +128,7 @@ if (isset($_GET['Type'])) {
                     Your Internships
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse Your internships and take control</p>
                 </caption>
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Internship Number
@@ -217,7 +209,7 @@ if (isset($_GET['Type'])) {
                         } else {
                             $actions = '
                     <div class="flex items-center space-x-2">
-                        <a href="dashboard.php?internshipNumber='.urlencode($internshipNumber).'"><button class="viewDetailsButton px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-800 rounded-lg focus:outline-none focus:bg-blue-800 w-28">
+                        <a href="dashboard.php?internshipNumber=' . urlencode($internshipNumber) . '"><button class="viewDetailsButton px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-800 rounded-lg focus:outline-none focus:bg-blue-800 w-28">
                             View Details
                         </button></a>
                     </div>
@@ -227,17 +219,17 @@ if (isset($_GET['Type'])) {
 
                         // Output the table row with the fetched values
                         echo '
-                <tr class="bg-white dark:bg-gray-800">
+                <tr class="bg-white  odd:bg-white even:bg-slate-50 dark:bg-gray-800 dark:odd:bg-gray-800 dark:even:bg-gray-600">
                 <td class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white">
                 ' . $internshipNumber . '
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 dark:text-white">
                 ' . $startDate . '
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 dark:text-white">
                 ' . $period . '
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 dark:text-white">
                 ' . $statusText . '
                 </td>
                 <td class="px-6 py-4 text-right">

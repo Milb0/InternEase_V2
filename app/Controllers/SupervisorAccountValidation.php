@@ -3,8 +3,8 @@ TODO: // Session User Authentication // the email might not get changed and I mu
 
 require_once BASE_DIR . 'app/Models/InternshipSupervisor.php';
 require_once BASE_DIR . 'app/Models/Company.php';
-$InternshipSupervisor = new InternshipSupervisor();
-$Company = new Company();
+$InternshipSupervisor = new InternshipSupervisor($db_conn);
+$Company = new Company($db_conn);
 // define variables and set to empty values
 $name = $email = $password = $confirm_password = $phone = $address = "";
 $name_err = $email_err = $password_err = $confirm_password_err = $phone_err = $address_err = "";

@@ -1,19 +1,19 @@
 <?php
-$title = "InternEase - Dashboard";
+$title = "InternEase - Student Profile";
 $style_file = "";
 $cssframewrok = '<script src="https://cdn.tailwindcss.com"></script>';
 require_once '../../app/includes/bootstrap.php';
 require_once BASE_DIR . 'app/includes/autoload.php';
-require_once BASE_DIR . 'app/includes/header.php';
-// require_once BASE_DIR . 'app/Controllers/FetchStudentController.php';
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
     $who = $_SESSION['user_type'];
     redirect_unauthorized_user($who);
 } elseif (!isset($_SESSION['user_type'])) {
     header("Location:../whoami.php");
+    exit;
 }
 $student = new Student($db_conn);
 $information = $student->getStudentFullInformation($_SESSION['id']);
+require_once BASE_DIR . 'app/includes/header.php';
 ?>
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
@@ -26,8 +26,8 @@ $information = $student->getStudentFullInformation($_SESSION['id']);
                     </svg>
                 </button>
                 <div class="flex ml-2 md:mr-24">
-                    <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded dark:bg-gray-800">
-                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo" />
+                    <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded dark:bg-opacity-0">
+                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo"/>
                     </div>
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">InternEase</span>
                 </div>
@@ -35,10 +35,10 @@ $information = $student->getStudentFullInformation($_SESSION['id']);
             <div class="flex items-center">
                 <div class="relative ml-3">
                     <div>
-                        <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
-                            <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-                        </button>
+                    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
+                    </button>
                     </div>
                     <div class="absolute right-0 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-user">
                         <ul class="py-1" role="none">
@@ -46,10 +46,10 @@ $information = $student->getStudentFullInformation($_SESSION['id']);
                                 <a href="dashboard.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Dashboard</a>
                             </li>
                             <li>
-                                <a href="profile.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
+                                <a href="" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Profile</a>
                             </li>
                             <li>
-                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" onclick="toggleSignOutModal()">Sign out</a>
+                                <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem" onclick="toggleSignOutModal()">Sign out</a>
                             </li>
                         </ul>
                     </div>
@@ -65,7 +65,6 @@ $information = $student->getStudentFullInformation($_SESSION['id']);
             <li>
                 <a href="dashboard.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa fa-home"></i>
-
                     <span class="ml-3">Dashboard</span>
                 </a>
             </li>
@@ -84,13 +83,11 @@ $information = $student->getStudentFullInformation($_SESSION['id']);
             <li>
                 <a href="contactus.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <i class="fa-solid fa-envelope-open-text"></i>
-
                     <span class="flex-1 ml-3 whitespace-nowrap">Contact Us</span>
                 </a>
-
             </li>
             <li>
-                <a href="../logout.php" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a class="flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700" onclick="toggleSignOutModal()">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     <span class="flex-1 ml-3 whitespace-nowrap">Sign Out</span>
                 </a>
@@ -98,12 +95,13 @@ $information = $student->getStudentFullInformation($_SESSION['id']);
         </ul>
     </div>
 </aside>
+
 <div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700">
     <div class="p-4 mt-14">
         <?php
         if (isset($_GET['Type'])) {
             $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            if ($safeType === '2') {
+            if ($safeType === '2' || $safeType === '3' || $safeType === '4' ) {
                 displayAlert($safeType);
             } else {
                 header("location:error404.php");

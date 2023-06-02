@@ -1,0 +1,204 @@
+// SIDE BAR HAMBURGER MENU
+function closeSidebar() {
+  var sidebar = document.getElementById("sidebar");
+  if (sidebar) {
+    sidebar.classList.add("-translate-x-full");
+  }
+}
+function toggleSidebar() {
+  var sidebarButton = document.querySelector("[data-drawer-toggle='logo-sidebar']");
+  var sidebar = document.getElementById("sidebar");
+
+  if (sidebarButton && sidebar) {
+    sidebarButton.addEventListener("click", function (event) {
+      event.stopPropagation(); // Prevent the click event from bubbling up to the document
+      sidebar.classList.toggle("-translate-x-full");
+    });
+
+    document.addEventListener("click", function (event) {
+      var isSidebarClicked = sidebar.contains(event.target);
+      var isSidebarButtonClicked = sidebarButton.contains(event.target);
+
+      if (!isSidebarClicked && !isSidebarButtonClicked) {
+        closeSidebar();
+      }
+    });
+  }
+}
+document.addEventListener("DOMContentLoaded", function () {
+  toggleSidebar();
+});
+
+// PROFILE MENU
+function toggleMenu() {
+  const menu = document.getElementById('dropdown-user');
+  const toggleButton = document.querySelector('[data-dropdown-toggle="dropdown-user"]');
+
+  if (menu && toggleButton) {
+    // Toggle the visibility of the menu
+    menu.classList.toggle('hidden');
+
+    // Add event listener to the document to hide the menu when clicking outside of it
+    document.addEventListener('click', function (event) {
+      const isClickInsideMenu = menu.contains(event.target);
+      const isClickOnButton = toggleButton.contains(event.target);
+
+      if (!isClickInsideMenu && !isClickOnButton) {
+        menu.classList.add('hidden');
+      }
+    });
+
+    // Add event listeners to the dropdown items to hide the menu when clicked
+    const dropdownItems = document.querySelectorAll('#dropdown-user [role="menuitem"]');
+    dropdownItems.forEach(function (item) {
+      item.addEventListener('click', function () {
+        menu.classList.add('hidden');
+      });
+    });
+  }
+}
+//SIGN OUT MODAL
+function toggleSignOutModal() {
+  var modal = document.getElementById('modal');
+  modal.classList.toggle('hidden');
+}
+
+function closeSignOutModal() {
+  var modal = document.getElementById('modal');
+  modal.classList.add('hidden');
+}
+document.addEventListener("DOMContentLoaded", function () {
+  closeSignOutModal();
+});
+
+//Alert Message
+function closeAlertDialogue() {
+  const closeAlertButton = document.querySelector('#alert-close-button');
+  const internshipAlert = document.querySelector('#alert-additional-content-3');
+
+  if (closeAlertButton && internshipAlert) {
+    closeAlertButton.addEventListener('click', function () {
+      internshipAlert.classList.add('hidden');
+    });
+  }
+}
+
+function toggleDetailsModal() {
+  // Get the modal element
+  const detailsModal = document.getElementById('details-modal');
+
+  if (detailsModal) {
+    // Check if the modal is hidden
+    const isHidden = detailsModal.classList.contains('hidden');
+
+    if (isHidden) {
+      // Show the modal
+      detailsModal.classList.remove('hidden');
+
+      // Add event listener to the close button inside the modal
+      const closeButton = detailsModal.querySelector('[data-modal-hide]');
+      if (closeButton) {
+        closeButton.addEventListener('click', function () {
+          // Hide the modal
+          detailsModal.classList.add('hidden');
+        });
+      }
+
+      // Add event listener to the document to hide the modal when clicking outside of it
+      document.addEventListener('click', function (event) {
+        if (event.target === detailsModal) {
+          // Hide the modal when clicking on the background
+          detailsModal.classList.add('hidden');
+        }
+      });
+    } else {
+      // Hide the modal if it was already shown
+      detailsModal.classList.add('hidden');
+    }
+  }
+}
+
+// DESCRIPTION CHARACTERS LIMIT
+const descriptionInput = document.getElementById('description');
+const descriptionCounter = document.getElementById('description-counter');
+
+if (descriptionInput && descriptionCounter) {
+  descriptionInput.addEventListener('input', updateDescriptionCounter);
+}
+
+function updateDescriptionCounter() {
+  const maxLength = 1000;
+  let currentLength = descriptionInput.value.length;
+
+  if (currentLength > maxLength) {
+    descriptionInput.value = descriptionInput.value.substring(0, maxLength);
+    currentLength = maxLength;
+  }
+
+  descriptionCounter.textContent = currentLength + '/1000 characters';
+}
+
+// GRAD DYNAMIC SELECT 
+var departmentSelect = document.getElementById("department");
+var gradeSelect = document.getElementById("grade");
+var gradp = document.getElementById("tempgradp");
+
+departmentSelect.addEventListener("change", function () {
+  var selectedDepartment = this.value;
+
+  while (gradeSelect.firstChild) {
+    gradeSelect.removeChild(gradeSelect.firstChild);
+  }
+
+  if (selectedDepartment !== "") {
+    gradp.classList.add('hidden');
+    showCustomSelect(selectedDepartment);
+    gradeSelect.style.display = "block";
+  } else {
+    gradeSelect.style.display = "none";
+  }
+});
+
+function showCustomSelect(selectedDepartment) {
+  var options = [];
+
+  if (selectedDepartment === "Fundamental Computer Science and its Applications") {
+    options = ["L3 TI", "L3 SCI", "M2 STIC", "M2 RSD"];
+  } else if (selectedDepartment === "Software and Information Systems Technologies") {
+    options = ["L3 GL", "L3 SI", "M2 SITW", "M2 GL"];
+  }
+
+  // Clear existing options
+  gradeSelect.innerHTML = "";
+
+  // Add "Select Grade" option
+  var selectOption = document.createElement("option");
+  selectOption.value = "";
+  selectOption.disabled = true;
+  selectOption.selected = true;
+  selectOption.text = "Select Grade";
+  gradeSelect.appendChild(selectOption);
+
+  // Add custom options
+  options.forEach(function (optionValue) {
+    var option = document.createElement("option");
+    option.value = optionValue;
+    option.text = optionValue;
+    gradeSelect.appendChild(option);
+  });
+}
+
+// PASSWORD VISIBILITY 
+function togglePasswordVisibility(inputId) {
+  var input = document.getElementById(inputId);
+  var icon = document.getElementById(inputId + '-icon');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+}

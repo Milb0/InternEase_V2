@@ -17,6 +17,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     session_destroy();
     echo 'Session timed out.';
     header("location: ../index.php");
+    exit();
 }
 $_SESSION['LAST_ACTIVITY'] = time();
 
@@ -25,3 +26,4 @@ define('BASE_DIR', dirname(__DIR__) . '/../');
 require_once "helpers.php";
 require_once 'config.php';
 require_once 'autoload.php';
+?>

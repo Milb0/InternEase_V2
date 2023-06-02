@@ -93,6 +93,6 @@ require_once "../app/includes/header.php"; ?>
         </div>
     </div>
 </footer>
+<script type="text/javascript" src="assets/js/app.js"></script>
 <?php 
-$script_file= "assets/js/app.js";
 require_once "../app/includes/footer.php"; ?>

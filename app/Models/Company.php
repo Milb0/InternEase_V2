@@ -1,20 +1,49 @@
 <?php
 
-require_once __DIR__ . '/../includes/config.php';
 class Company
 {
     private $db;
 
-    public function __construct()
+    public function __construct($db_conn)
     {
-        global $db_conn;
         $this->db = $db_conn;
     }
 
-    public function createCompany()
+    public function createCompany($name, $address)
     {
+        $sql = "INSERT INTO company (name, address) VALUES (:name, :address)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+        $stmt->bindParam(":address", $address, PDO::PARAM_STR);
+
+        $result = $stmt->execute();
+
+        if ($result) {
+            $companyID = $this->db->lastInsertId(); // Retrieve the ID of the inserted record
+            return $companyID;
+        } else {
+            return false; // Return false if the insertion failed
+        }
     }
 
+
+    public function getCompany($company_id, $includeAddress = false)
+    {
+        $sql = "SELECT name" . ($includeAddress ? ", address" : "") . " FROM company WHERE id = :company_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":company_id", $company_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            $company_data = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (!$company_data) {
+                throw new Exception("Company not found");
+            } else {
+                return $company_data;
+            }
+        } else {
+            throw new Exception("Failed to execute query");
+        }
+    }
 
     /**
      * Update a Company in the database.
@@ -58,23 +87,5 @@ class Company
             return false;
         }
     }
-
-    public function getCompany($company_id, $includeAddress = false)
-    {
-        $sql = "SELECT name" . ($includeAddress ? ", address" : "") . " FROM company WHERE id = :company_id";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":company_id", $company_id, PDO::PARAM_INT);
-
-        if ($stmt->execute()) {
-            $company_data = $stmt->fetch(PDO::FETCH_ASSOC);
-            if (!$company_data) {
-                throw new Exception("Company not found");
-            } else {
-                return $company_data;
-            }
-        } else {
-            throw new Exception("Failed to execute query");
-        }
-    }
-    
 }
+?>

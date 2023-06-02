@@ -1,16 +1,25 @@
 <?php
-$email = $password = $user_type = $email_err = $password_err = "";
+$email = $password = $user_type = $email_err = $password_err = $form_error_message = "";
 $HiddenInputMessage = NULL;
 $login_info = NULL;
+$expected_input_names = array(
+    'email',
+    'password',
+    'identity',
+);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $HiddenInputMessage = NULL;
     $user_type = trim(filter_input(INPUT_POST, 'identity', FILTER_SANITIZE_SPECIAL_CHARS));
     switch ($user_type) {
         case 'student':
-            require_once BASE_DIR . 'app/Models/Student.php';
-
-            $student = new Student();
+            try {
+                foreach ($expected_input_names as $input_name) {
+                    if (!isset($_POST[$input_name])) {
+                        throw new Exception("Something Went Wrong Try again please");
+                    }
+                }
+            $student = new Student($db_conn);
             $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $email = trim($_POST['email']);
             if (validateEmail($email, $email_err, $login_info, $student)) {
@@ -24,11 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION['id'] =$student->getStudentID($email);
                         if ($student->isVerified($_SESSION['id'])) {
                             $_SESSION['user_type'] = 'student';
-                            include '../student/loading.html';
+                            include '../loading.html';
                             header('Location: ../student/dashboard.php');
                             exit;
                         } else {
                             $_SESSION["verification_code"] = $student->getStudentVerificationCode($_SESSION['id']);
+                            include '../loading.html';
                             header("location:../student/verification.php");
                             exit;
                         }
@@ -36,12 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 $email = NULL;
+            }} catch (Exception $e) {
+                $form_error_message = $e->getMessage();
             }
             break;
         case 'DepartmentHead':
-            require_once BASE_DIR . 'app/Models/DepartmentHead.php';
-            $DepartmentHead = new DepartmentHead();
-            $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+            try {
+                foreach ($expected_input_names as $input_name) {
+                    if (!isset($_POST[$input_name])) {
+                        throw new Exception("Something Went Wrong Try again please");
+                    }
+                }
+                $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $email = trim($_POST['email']);
             if (validateEmail($email, $email_err, $login_info, $DepartmentHead)) {
                 if (empty($password)) {
@@ -59,13 +75,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 $email = NULL;
+            }} catch (Exception $e) {
+                $form_error_message = $e->getMessage();
             }
             break;
         case 'internshipsupervisor':
-            require_once BASE_DIR . 'app/Models/InternshipSupervisor.php';
-            require_once BASE_DIR . 'app/Models/Company.php';
-            $InternshipSupervisor = new InternshipSupervisor();
-            $company= new Company();
+            try {
+                foreach ($expected_input_names as $input_name) {
+                    if (!isset($_POST[$input_name])) {
+                        throw new Exception("Something Went Wrong Try again please");
+                    }
+                }
+            $InternshipSupervisor = new InternshipSupervisor($db_conn);
+            $company= new Company($db_conn);
             $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
             $email = trim($_POST['email']);
             if (validateEmail($email, $email_err, $login_info, $InternshipSupervisor)) {
@@ -79,7 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $_SESSION['user_type'] = 'internship-supervisor';
                         $_SESSION["email"] = $email;
                         if ($InternshipSupervisor->isFirstLogin($email)) {
-                            $_SESSION["supervisor"] = $InternshipSupervisor->getInternshipSupervisor($email);
+                            $_SESSION["supervisor"] = $InternshipSupervisor->getInternshipSupervisor($email,true);
+                            ;
                             $_SESSION["sup_company"] = $company->getCompany($_SESSION['supervisor']['company_id'],true);
                             header("location:../internship-supervisor/complete-account.php");
                             exit;
@@ -93,6 +116,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } else {
                 $email = NULL;
+            }} catch (Exception $e) {
+                $form_error_message = $e->getMessage();
             }
             break;
         default:

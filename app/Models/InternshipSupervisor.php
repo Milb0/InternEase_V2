@@ -1,34 +1,38 @@
 <?php
 
-require_once __DIR__ . '/../includes/config.php';
 class InternshipSupervisor
 {
     private $db;
 
-    public function __construct()
+    public function __construct($db_conn)
     {
-        global $db_conn;
         $this->db = $db_conn;
     }
 
-    public function createInternshipSupervisor($company_id, $email, $username, $password_hashed, $name, $phonenumber, $faxnumber, $first_login)
+    public function createInternshipSupervisor($company_id, $email, $username, $name, $phonenumber, $faxnumber)
     {
-        $sql = "INSERT INTO internship_supervisor (company_id, email, username, password_hashed, name, phonenumber, faxnumber, first_login) VALUES (:company_id, :email, :username, :password_hashed, :name, :phonenumber, :faxnumber, :first_login)";
+        $sql = "INSERT INTO internship_supervisor (company_id, email, username, name, phonenumber, faxnumber) VALUES (:company_id, :email, :username, :name, :phonenumber, :faxnumber)";
         if ($stmt = $this->db->prepare($sql)) {
             $stmt->bindParam(":company_id", $company_id, PDO::PARAM_INT);
             $stmt->bindParam(":email", $email, PDO::PARAM_STR);
             $stmt->bindParam(":username", $username, PDO::PARAM_STR);
-            $stmt->bindParam(":password_hashed", $password_hashed, PDO::PARAM_STR);
             $stmt->bindParam(":name", $name, PDO::PARAM_STR);
             $stmt->bindParam(":phonenumber", $phonenumber, PDO::PARAM_STR);
             $stmt->bindParam(":faxnumber", $faxnumber, PDO::PARAM_STR);
-            $stmt->bindParam(":first_login", $first_login, PDO::PARAM_INT);
 
-            return $stmt->execute();
+            $result = $stmt->execute();
+
+            if ($result) {
+                $supervisorID = $this->db->lastInsertId();
+                return $supervisorID;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
     }
+
 
     /**
      * Update an Internship Supervisor in the database.
@@ -47,13 +51,12 @@ class InternshipSupervisor
         $sql = "UPDATE internship_supervisor SET ";
         $params = array();
 
-        // Check if name should be updated
+        // Checking if the variables should be updated
         if (!empty($name)) {
             $sql .= "name = :name";
             $params[':name'] = $name;
         }
 
-        // Check if email should be updated
         if (!empty($email)) {
             if (!empty($name)) {
                 $sql .= ", ";
@@ -62,7 +65,6 @@ class InternshipSupervisor
             $params[':email'] = $email;
         }
 
-        // Check if password_hash should be updated
         if (!empty($password_hash)) {
             if (!empty($name) || !empty($email)) {
                 $sql .= ", ";
@@ -71,7 +73,6 @@ class InternshipSupervisor
             $params[':password_hash'] = $password_hash;
         }
 
-        // Check if phone should be updated
         if (!empty($phone)) {
             if (!empty($name) || !empty($email) || !empty($password_hash)) {
                 $sql .= ", ";
@@ -80,11 +81,10 @@ class InternshipSupervisor
             $params[':phone'] = $phone;
         }
 
-        // Append the WHERE clause
         $sql .= " WHERE id = :id";
         $params[':id'] = $id;
 
-        // Execute the query
+        // Appending the WHERE clause
         $stmt = $this->db->prepare($sql);
         if ($stmt->execute($params)) {
             return true;
@@ -115,11 +115,16 @@ class InternshipSupervisor
         }
     }
 
-    public function getInternshipSupervisor($email)
+    public function getInternshipSupervisor($identifier, $byEmail)
     {
-        $sql = "SELECT * FROM internship_supervisor WHERE email = :email";
+        if ($byEmail) {
+            $sql = "SELECT * FROM internship_supervisor WHERE email = :identifier";
+        } else {
+            $sql = "SELECT * FROM internship_supervisor WHERE id = :identifier";
+        }
+
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->bindParam(":identifier", $identifier, PDO::PARAM_STR);
 
         if (!$stmt->execute()) {
             // handle database error here, e.g. log the error
@@ -156,12 +161,39 @@ class InternshipSupervisor
         }
     }
 
+    public function isAccountActive(string $id): bool
+    {
+        $sql = "SELECT active FROM internship_supervisor WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            $active = $stmt->fetchColumn(0);
+            return $active === 1;
+        } else {
+            throw new Exception("Failed to execute query");
+        }
+    }
+
+    public function accountActive($id)
+    {
+        $sql = "UPDATE internship_supervisor SET Active = 1 WHERE id= :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_STR);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function getInternshipSupervisorID($email)
     {
         $sql = "SELECT id FROM internship_supervisor WHERE email = :email";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(":email", $email, PDO::PARAM_STR);
-        
+
         if ($stmt->execute()) {
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } else {
@@ -169,3 +201,4 @@ class InternshipSupervisor
         }
     }
 }
+?>

@@ -1,8 +1,7 @@
 <?php
 require_once BASE_DIR . 'app/Models/Student.php';
 $code = $code_err = '';
-$student = new Student();
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$student = new Student($db_conn);if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $code = filter_input(INPUT_POST,'code', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
     if (empty(trim($code))) {
