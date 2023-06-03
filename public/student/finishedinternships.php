@@ -102,10 +102,10 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
     </div>
 </aside>
 
-<div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700">
-    <div class="p-4 mt-14">
-        <div class="flex flex-col justify-end mb-4 rounded bg-gray-50 dark:bg-gray-800 overflow-x-auto max-w-full">
-            <table class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
+<div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+  <div class="p-4 mt-14 flex-grow">
+  <div class="flex flex-col justify-end mb-4 rounded bg-gray-50 dark:bg-gray-800 overflow-x-auto flex-grow">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                     Your Internships
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse Your internships and take control</p>

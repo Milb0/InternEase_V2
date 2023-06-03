@@ -1,3 +1,40 @@
+// TOOLTIP
+const viewDetailsButtons = document.querySelectorAll('.viewDetailsButton');
+const editDetailsButtons = document.querySelectorAll('.editDetailsButton');
+const deleteInternshipButtons = document.querySelectorAll('.deleteInternshipButton');
+const profileEditButtons = document.querySelectorAll('.profileEditButtons');
+
+function attachTooltipEvents(buttons) {
+  buttons.forEach(button => {
+    const tooltip = button.querySelector('span');
+
+    // Hide the tooltip span initially
+    tooltip.style.display = 'none';
+
+    // Show the tooltip span on mouse enter
+    button.addEventListener('mouseenter', () => {
+      tooltip.style.display = 'block';
+    });
+
+    // Hide the tooltip span on mouse leave
+    button.addEventListener('mouseleave', () => {
+      tooltip.style.display = 'none';
+    });
+  });
+}
+if(viewDetailsButtons){
+  attachTooltipEvents(viewDetailsButtons);
+}
+if (editDetailsButtons) {
+  attachTooltipEvents(editDetailsButtons);
+}
+if (deleteInternshipButtons) {
+attachTooltipEvents(deleteInternshipButtons);
+}
+if(profileEditButtons){
+  attachTooltipEvents(profileEditButtons);
+}
+
 // SIDE BAR HAMBURGER MENU
 function closeSidebar() {
   var sidebar = document.getElementById("sidebar");
@@ -83,6 +120,7 @@ function closeAlertDialogue() {
   }
 }
 
+// DETAILS MODAL
 function toggleDetailsModal() {
   // Get the modal element
   const detailsModal = document.getElementById('details-modal');
@@ -118,25 +156,33 @@ function toggleDetailsModal() {
   }
 }
 
-// DESCRIPTION CHARACTERS LIMIT
 const descriptionInput = document.getElementById('description');
 const descriptionCounter = document.getElementById('description-counter');
+const messageInput = document.getElementById('message');
+const messageCounter = document.getElementById('message-counter');
+let limit;
 
 if (descriptionInput && descriptionCounter) {
-  descriptionInput.addEventListener('input', updateDescriptionCounter);
+  limit = 1000;
+  descriptionInput.addEventListener('input', updateCharacterCounter.bind(descriptionInput, descriptionCounter, limit));
+}
+if (messageInput && messageCounter) {
+  limit = 2000;
+  messageInput.addEventListener('input', updateCharacterCounter.bind(messageInput, messageCounter, limit));
 }
 
-function updateDescriptionCounter() {
-  const maxLength = 1000;
-  let currentLength = descriptionInput.value.length;
+function updateCharacterCounter(counterElement, limit) {
+  const maxLength = limit;
+  let currentLength = this.value.length;
 
   if (currentLength > maxLength) {
-    descriptionInput.value = descriptionInput.value.substring(0, maxLength);
+    this.value = this.value.substring(0, maxLength);
     currentLength = maxLength;
   }
 
-  descriptionCounter.textContent = currentLength + '/1000 characters';
+  counterElement.textContent = `${currentLength}/${maxLength} characters`;
 }
+
 
 // GRAD DYNAMIC SELECT 
 var departmentSelect = document.getElementById("department");

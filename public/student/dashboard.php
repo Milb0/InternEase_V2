@@ -27,7 +27,7 @@ $result = $student->getStudent($_SESSION['id']);
                 </button>
                 <div class="flex ml-2 md:mr-24">
                     <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded dark:bg-opacity-0">
-                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo"/>
+                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo" />
                     </div>
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">InternEase</span>
                 </div>
@@ -35,10 +35,10 @@ $result = $student->getStudent($_SESSION['id']);
             <div class="flex items-center">
                 <div class="relative ml-3">
                     <div>
-                    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
-                        <span class="sr-only">Open user menu</span>
-                        <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
-                    </button>
+                        <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
+                            <span class="sr-only">Open user menu</span>
+                            <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
+                        </button>
                     </div>
                     <div class="absolute right-0 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-user">
                         <div class="px-4 py-3" role="none">
@@ -104,8 +104,8 @@ $result = $student->getStudent($_SESSION['id']);
     </div>
 </aside>
 
-<div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700">
-    <div class="p-4 mt-14">
+<div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+    <div class="p-4 mt-14 flex-grow">
         <?php
         if (isset($_GET['Type'])) {
             $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
@@ -118,12 +118,12 @@ $result = $student->getStudent($_SESSION['id']);
         ?>
         <div class="flex justify-end mb-4">
             <a href="requestpage.php"><button class="px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded hover:bg-blue-700">
-                Submit Request
+                    Submit Request
                 </button></a>
         </div>
 
-        <div class="flex flex-col justify-end mb-4 rounded bg-gray-50 dark:bg-gray-800 overflow-x-auto">
-            <table class="min-w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <div class="flex flex-col justify-end mb-4 rounded bg-gray-50 dark:bg-gray-800 overflow-x-auto flex-grow">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800">
                     Your Internships
                     <p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Browse Your internships and take control</p>
@@ -194,24 +194,29 @@ $result = $student->getStudent($_SESSION['id']);
                         // Generate appropriate actions buttons
                         if ($status === '0') {
                             $actions = '
-                    <div class="flex items-center space-x-2">
-                        <button onclick="toggleDetailsModal(' . $internshipNumber . ')" class="viewDetailsButton px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-800 rounded-lg focus:outline-none focus:bg-blue-800 w-28">
-                            View Details
+                   <div class="flex items-center space-x-2">
+                        <button onclick="toggleDetailsModal(' . $internshipNumber . ')" class="viewDetailsButton px-4 py-2 text-base relative">
+                            <i class="fa-solid fa-eye text-black hover:text-blue-800 dark:text-white hover:text-blue-400" title="View Details"></i>
+                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
                         </button>
-                        <button class="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-800 rounded-lg focus:outline-none focus:bg-blue-800 w-28">
-                            Edit
+                        <button class=" editDetailsButton px-4 py-2 text-base relative">
+                            <i class="fa-solid fa-pen-to-square text-black hover:text-blue-800 dark:text-white hover:text-blue-400"></i>
+                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Edit</span>
+
                         </button>
-                        <button class="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-800 rounded-lg focus:outline-none focus:bg-red-800 w-28">
-                            Delete
+                        <button class=" deleteInternshipButton px-4 py-2 text-base relative">
+                            <i class="fa-solid fa-trash text-red-700"></i>
+                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">delete</span>
                         </button>
                     </div>
                 ';
                         } else {
                             $actions = '
                     <div class="flex items-center space-x-2">
-                        <a href="dashboard.php?internshipNumber=' . urlencode($internshipNumber) . '"><button class="viewDetailsButton px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-800 rounded-lg focus:outline-none focus:bg-blue-800 w-28">
-                            View Details
-                        </button></a>
+                        <button onclick="toggleDetailsModal(' . $internshipNumber . ')" class="viewDetailsButton px-4 py-2 text-base relative">
+                            <i class="fa-solid fa-eye text-black hover:text-blue-800 dark:text-white hover:text-blue-400" title="View Details"></i>
+                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
+                        </button>
                     </div>
                 ';
                         }
@@ -232,7 +237,7 @@ $result = $student->getStudent($_SESSION['id']);
                 <td class="px-6 py-4 dark:text-white">
                 ' . $statusText . '
                 </td>
-                <td class="px-6 py-4 text-right">
+                <td class="px-6 py-4 text-right ">
                 ' . $actions . '
                 </td>
                 </tr>
@@ -245,6 +250,7 @@ $result = $student->getStudent($_SESSION['id']);
         </div>
     </div>
 </div>
+
 
 <!-- Modal -->
 <div id="details-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 hidden">
@@ -312,6 +318,7 @@ $result = $student->getStudent($_SESSION['id']);
 </div>
 
 <script type="text/javascript" src="../assets/js/dashboard.js?v=<?php echo time(); ?>"></script>
+
 <?php
 singOutModal();
 require_once BASE_DIR . 'app/includes/footer.php';

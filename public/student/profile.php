@@ -27,7 +27,7 @@ require_once BASE_DIR . 'app/includes/header.php';
                 </button>
                 <div class="flex ml-2 md:mr-24">
                     <div class="bg-gray-400 bg-opacity-10 inline-block p-2 rounded dark:bg-opacity-0">
-                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo"/>
+                        <img src="../assets/images/logo.png" class="h-5" alt="InternEase Logo" />
                     </div>
                     <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">InternEase</span>
                 </div>
@@ -35,10 +35,10 @@ require_once BASE_DIR . 'app/includes/header.php';
             <div class="flex items-center">
                 <div class="relative ml-3">
                     <div>
-                    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
-                        <span class="sr-only">Open user menu</span>
-                        <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
-                    </button>
+                        <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user" onclick="toggleMenu()">
+                            <span class="sr-only">Open user menu</span>
+                            <img class="w-9 h-9 rounded-full overflow-hidden" src="../assets/images/student_avatar.png" alt="user photo">
+                        </button>
                     </div>
                     <div class="absolute right-0 mt-2 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-user">
                         <ul class="py-1" role="none">
@@ -96,12 +96,12 @@ require_once BASE_DIR . 'app/includes/header.php';
     </div>
 </aside>
 
-<div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700">
-    <div class="p-4 mt-14">
+<div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
+    <div class="p-4 mt-14 flex-grow">
         <?php
         if (isset($_GET['Type'])) {
             $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            if ($safeType === '2' || $safeType === '3' || $safeType === '4' ) {
+            if ($safeType === '2' || $safeType === '3' || $safeType === '4') {
                 displayAlert($safeType);
             } else {
                 header("location:error404.php");
@@ -112,8 +112,9 @@ require_once BASE_DIR . 'app/includes/header.php';
             <div class="px-6 py-4">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Personal Information</h2>
-                    <a href="editinformation.php?type=persona" class="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700">
+                    <a href="editinformation.php?type=persona" class="profileEditButtons text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 relative">
                         <i class="fa-regular fa-pen-to-square"></i>
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Edit</span>
                     </a>
                 </div>
                 <div class="border-b border-gray-200 dark:border-gray-700" title="Edit"></div>
@@ -130,8 +131,9 @@ require_once BASE_DIR . 'app/includes/header.php';
             <div class="px-6 py-4">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Academic Information</h2>
-                    <a href="editinformation.php?type=academia" class="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700">
+                    <a href="editinformation.php?type=academia" class="profileEditButtons text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 relative">
                         <i class="fa-regular fa-pen-to-square" title="Edit"></i>
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Edit</span>
                     </a>
                 </div>
                 <div class="border-b border-gray-200 dark:border-gray-700"></div>
@@ -148,8 +150,9 @@ require_once BASE_DIR . 'app/includes/header.php';
             <div class="px-6 py-4">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Login Credentials</h2>
-                    <a href="editinformation.php?type=auth" class="text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700">
+                    <a href="editinformation.php?type=auth" class="profileEditButtons text-blue-600 hover:text-blue-800 dark:text-blue-500 dark:hover:text-blue-700 relative">
                         <i class="fa-regular fa-pen-to-square" title="Edit"></i>
+                        <span class="absolute top-0 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Edit</span>
                     </a>
                 </div>
                 <div class="border-b border-gray-200 dark:border-gray-700"></div>

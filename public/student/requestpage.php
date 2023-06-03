@@ -76,7 +76,7 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
                         <p>Please fill out all the fields.</p>
                     </div>
 
-                    <div class="lg:col-span-2 text-black font-normal dark:text-white ">
+                    <div class="lg:col-span-2 text-black font-normal dark:text-white">
                         <form method="POST" action="requestpage.php">
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                 <div class="<?php echo (!empty($theme_err)) ? 'md:col-span-5 text-red-500' : 'md:col-span-5'; ?>">
