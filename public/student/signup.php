@@ -37,13 +37,14 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
                             <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                 <div class="<?php echo (!empty($name_err)) ? 'md:col-span-5 text-red-500' : 'md:col-span-5'; ?>">
                                     <label for="name">Full Name</label>
-                                    <input type="text" name="name" id="name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white<?php echo (!empty($name_err)) ? 'border-red-500' : ''; ?>" placeholder="Your Full Name" value="<?php echo $name; ?>" required />
+                                    <input type="text" name="name" id="name" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($name_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Your Full Name" value="<?php echo $name; ?>" />
                                     <span><?php echo $name_err; ?></span>
                                 </div>
 
+
                                 <div class="<?php echo (!empty($email_err)) ? 'md:col-span-5 text-red-500' : 'md:col-span-5'; ?>">
                                     <label for="email">University Email Address</label>
-                                    <input type="email" name="email" id="email" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white<?php echo (!empty($name_err)) ? 'border-red-500' : ''; ?>" placeholder="Your University Email ( ...@univ-constantine2.dz )" value="<?php echo $email; ?>" required />
+                                    <input type="email" name="email" id="email" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($email_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Your University Email ( ...@univ-constantine2.dz )" value="<?php echo $email; ?>" />
                                     <span><?php echo $email_err; ?></span>
                                 </div>
 
@@ -51,35 +52,35 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
                                     <label for="password">Password</label>
                                     <div class="relative">
 
-                                    <input type="password" name="password" id="password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($password_err)) ? 'border-red-500' : ''; ?>" placeholder="Enter your Password" value="<?php echo $password; ?>" required />
-                                    <span class="absolute top-3 right-3 cursor-pointer" onclick="togglePasswordVisibility('password')">
+                                        <input type="password" name="password" id="password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($password_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Enter your Password" value="<?php echo $password; ?>" />
+                                        <span class="absolute top-3 right-3 cursor-pointer" onclick="togglePasswordVisibility('password')">
                                             <i id="password" class="far fa-eye"></i>
                                         </span>
-            </div>
+                                    </div>
                                     <span><?php echo $password_err; ?></span>
                                 </div>
 
-                                <div class="md:col-span-2 <?php echo (!empty($confirm_password_err)) ? 'text-red-500' : ''; ?>">
+                                <div class="md:col-span-3 <?php echo (!empty($confirm_password_err)) ? 'text-red-500' : ''; ?>">
                                     <label for="confirm_password">Confirm Password</label>
-                                    <input type="password" name="confirm_password" id="confirm_password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($confirm_password_err)) ? 'border-red-500' : ''; ?>" placeholder="Confirm your Password" value="<?php echo $confirm_password; ?>" required />
+                                    <input type="password" name="confirm_password" id="confirm_password" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($confirm_password_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Confirm your Password" value="<?php echo $confirm_password; ?>" />
                                     <span><?php echo $confirm_password_err; ?></span>
                                 </div>
 
                                 <div class="md:col-span-2 <?php echo (!empty($birth_date_err)) ? 'text-red-500' : ''; ?>">
                                     <label for="birth_date">Birth Date</label>
-                                    <input type="date" name="birth_date" id="birth_date" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($birth_date_err)) ? 'border-red-500' : ''; ?>" placeholder="" value="<?php echo $birth_date; ?>" required />
+                                    <input type="date" name="birth_date" id="birth_date" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($birth_date_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="" value="<?php echo $birth_date; ?>" />
                                     <span><?php echo $birth_date_err; ?></span>
                                 </div>
 
                                 <div class="md:col-span-3 <?php echo (!empty($birth_place_err)) ? 'text-red-500' : ''; ?>">
                                     <label for="birth_place">Birth Place</label>
-                                    <input type="text" name="birth_place" id="birth_place" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($birth_place_err)) ? 'border-red-500' : ''; ?>" placeholder="Enter your Birth Place" value="<?php echo $birth_place; ?>" required />
+                                    <input type="text" name="birth_place" id="birth_place" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($birth_place_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Enter your Birth Place" value="<?php echo $birth_place; ?>" />
                                     <span><?php echo $birth_place_err; ?></span>
                                 </div>
 
                                 <div class="<?php echo (!empty($phone_err)) ? 'md:col-span-5 text-red-500' : 'md:col-span-5'; ?>">
                                     <label for="phone">Phone Number</label>
-                                    <input type="text" name="phone" id="phone" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white<?php echo (!empty($phone_err)) ? 'border-red-500' : ''; ?>" placeholder="Your Phone number. (ex: +213542392529 or 054239259)" value="<?php echo $phone; ?>" required />
+                                    <input type="text" name="phone" id="phone" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($phone_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Your Phone number. (ex: +213542392529 or 054239259)" value="<?php echo $phone; ?>" />
                                     <span><?php echo $phone_err; ?></span>
                                 </div>
 
@@ -104,20 +105,20 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
 
                                 <div class="md:col-span-5 <?php echo (!empty($student_card_id_err)) ? 'text-red-500' : ''; ?>">
                                     <label for="student_card_id">Confirm Email</label>
-                                    <input type="number" name="student_card_id" id="student_card_id" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white<?php echo (!empty($student_card_id_err)) ? 'border-red-500' : ''; ?>" placeholder="Enter your Student ID Card" value="<?php echo $student_card_id; ?>" required />
+                                    <input type="number" name="student_card_id" id="student_card_id" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white <?php echo (!empty($student_card_id_err)) ? 'border-red-500 text-black' : ''; ?>" placeholder="Enter your Student ID Card" value="<?php echo $student_card_id; ?>" />
                                     <span><?php echo $student_card_id_err; ?></span>
                                 </div>
 
                                 <div class="md:col-span-4 text-right mt-5">
-                                        <button type="submit" class="bg-[#009579] hover:bg-[#006653] text-white text-lg font-medium w-full py-1.5 w-full rounded">Create Account</button>
+                                    <button type="submit" class="bg-[#009579] hover:bg-[#006653] text-white text-lg font-medium w-full py-1.5 w-full rounded">Create Account</button>
                                 </div>
                                 <div class="md:col-span-1 text-right mt-5">
-                                        <a href='../whoami.php'><button type="button" class="bg-gray-400 hover:bg-gray-600 text-white text-lg font-medium w-full py-1.5 w-full rounded">Cancel</button></a>
+                                    <a href='../whoami.php'><button type="button" class="bg-gray-400 hover:bg-gray-600 text-white text-lg font-medium w-full py-1.5 w-full rounded">Cancel</button></a>
                                 </div>
                             </div>
                         </form>
                         <div class="md:col-span-5 flex  justify-center">
-                            <span class=" mt-3 rounded w-full text-black text-lg font-regular dark:text-white"> Already Have an Account?  
+                            <span class=" mt-3 rounded w-full text-black text-lg font-regular dark:text-white"> Already Have an Account?
                                 <a href="login.php" class="text-[#009579] hover:underline decoration-[#009579] dark:text-[#009579]"> Log in</a>
                             </span>
                         </div>
@@ -132,4 +133,3 @@ require_once BASE_DIR . 'app/Controllers/RegisterController.php';
 <?php
 require_once BASE_DIR . 'app/includes/footer.php';
 ?>
-

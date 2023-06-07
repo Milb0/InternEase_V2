@@ -40,13 +40,13 @@ require_once BASE_DIR . 'app/Controllers/LogInController.php';
                 }
                 ?>
                 <?php if (isset($HiddenInputMessage)) {
-                    echo '<div id="alert-additional-content-3" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800 relative" role="alert">
+                    echo '<div id="alert-additional-content-3" class="p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800 relative" role="alert">
                     <div class="flex items-center">
                         <i class="fa-solid fa-circle-info w-4 h-4 mr-2"></i>
                         <h3 class="text-lg font-medium">' . $HiddenInputMessage . '</h3>
                     </div>
-                    <button id="alert-close-button" onclick="closeAlertDialogue()" type="button" class="absolute top-1 right-1 -mt-1 -mr-1 text-red-800 rounded-lg p-1.5 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-blue-400" aria-label="Close">
-                        <i class="fa-solid fa-circle-xmark w-5 h-5 text-red-800 dark:text-red-800"></i>
+                    <button id="alert-close-button" onclick="closeAlertDialogue()" type="button" class="absolute top-1 right-1 -mt-1 -mr-1 text-green-800 rounded-lg p-1.5 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-blue-400" aria-label="Close">
+                        <i class="fa-solid fa-circle-xmark w-5 h-5 text-green-800 dark:text-green-800"></i>
                     </button>
                 </div>';
                 }
