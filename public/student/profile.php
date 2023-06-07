@@ -106,10 +106,8 @@ if (isset($_GET['Type'])) {
 <div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
     <div class="p-4 mt-14 flex-grow">
         <?php
-        if (isset($_GET['Type'])) {
-            $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            if ($safeType === '2' || $safeType === '3' || $safeType === '4') {
-                displayAlert($safeType);
+        if (isset($safeType)) {
+            displayAlert($safeType);
             } else {
                 header("location:error404.php");
             }
