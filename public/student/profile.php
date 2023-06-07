@@ -13,7 +13,14 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
 }
 $student = new Student($db_conn);
 $information = $student->getStudentFullInformation($_SESSION['id']);
-require_once BASE_DIR . 'app/includes/header.php';
+if (isset($_GET['Type'])) {
+    $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    if ($safeType !== '2' && $safeType !== '3' && $safeType !== '4') {
+        $safeType = NULL;
+        header("Location: error404.php");
+        exit;
+    }
+}
 ?>
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
