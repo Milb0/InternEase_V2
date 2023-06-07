@@ -1,9 +1,10 @@
 <?php
-$title = "InternEase - Student Profile";
+$title = "InternEase - Profile";
 $style_file = "";
 $cssframewrok = '<script src="https://cdn.tailwindcss.com"></script>';
 require_once '../../app/includes/bootstrap.php';
 require_once BASE_DIR . 'app/includes/autoload.php';
+require_once BASE_DIR . 'app/includes/header.php';
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
     $who = $_SESSION['user_type'];
     redirect_unauthorized_user($who);
@@ -108,9 +109,6 @@ if (isset($_GET['Type'])) {
         <?php
         if (isset($safeType)) {
             displayAlert($safeType);
-            } else {
-                header("location:error404.php");
-            }
         }
         ?>
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md">
