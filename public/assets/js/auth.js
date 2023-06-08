@@ -27,6 +27,7 @@ function checkValidity() {
 }
 
 // Add an event listener to each required input to listen for input changes and recheck validity
+if(inputs){
 inputs.forEach(input => {
   input.addEventListener('input', checkValidity);
-});
+});}

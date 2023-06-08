@@ -2,6 +2,7 @@
 const viewDetailsButtons = document.querySelectorAll('.viewDetailsButton');
 const editDetailsButtons = document.querySelectorAll('.editDetailsButton');
 const deleteInternshipButtons = document.querySelectorAll('.deleteInternshipButton');
+const attendanceButtons = document.querySelectorAll('.attendanceButton');
 const profileEditButtons = document.querySelectorAll('.profileEditButtons');
 
 function attachTooltipEvents(buttons) {
@@ -30,6 +31,9 @@ if (editDetailsButtons) {
 }
 if (deleteInternshipButtons) {
 attachTooltipEvents(deleteInternshipButtons);
+}
+if(attendanceButtons){
+  attachTooltipEvents(attendanceButtons);
 }
 if(profileEditButtons){
   attachTooltipEvents(profileEditButtons);
@@ -108,6 +112,46 @@ document.addEventListener("DOMContentLoaded", function () {
   closeSignOutModal();
 });
 
+// CONFIRMATION MODAL
+function toggleConfirmationModal() {
+  var modal = document.getElementById('confirmationModal');
+  modal.classList.toggle('hidden');
+}
+
+function closeConfirmationModal() {
+  var modal = document.getElementById('confirmationModal');
+  modal.classList.add('hidden');
+}
+document.addEventListener("DOMContentLoaded", function () {
+  closeConfirmationModal();
+});
+// REFUSAL MODAL
+function toggleRefusalModal() {
+  var modal = document.getElementById('refusalModal');
+  modal.classList.toggle('hidden');
+}
+
+function closeRefusalModal() {
+  var modal = document.getElementById('refusalModal');
+  modal.classList.add('hidden');
+}
+document.addEventListener("DOMContentLoaded", function () {
+  closeRefusalModal();
+});
+// FEEDBACK MODAL
+function toggleFeedbackModal() {
+  var feedbackModal = document.getElementById('feedbackModal');
+  feedbackModal.classList.toggle('hidden');
+}
+
+function closeFeedbackModal() {
+  var feedbackModal = document.getElementById('feedbackModal');
+  feedbackModal.classList.add('hidden');
+}
+document.addEventListener("DOMContentLoaded", function () {
+  closeFeedbackModal();
+});
+
 //Alert Message
 function closeAlertDialogue() {
   const closeAlertButton = document.querySelector('#alert-close-button');
@@ -160,6 +204,9 @@ const descriptionInput = document.getElementById('description');
 const descriptionCounter = document.getElementById('description-counter');
 const messageInput = document.getElementById('message');
 const messageCounter = document.getElementById('message-counter');
+const customReasonInput = document.getElementById('customReason');
+const customReasonCounter = document.getElementById('customReason-counter');
+
 let limit;
 
 if (descriptionInput && descriptionCounter) {
@@ -169,6 +216,10 @@ if (descriptionInput && descriptionCounter) {
 if (messageInput && messageCounter) {
   limit = 2000;
   messageInput.addEventListener('input', updateCharacterCounter.bind(messageInput, messageCounter, limit));
+}
+if (customReasonInput && customReasonCounter) {
+  limit = 500;
+  customReasonInput.addEventListener('input', updateCharacterCounter.bind(customReasonInput, customReasonCounter, limit));
 }
 
 function updateCharacterCounter(counterElement, limit) {

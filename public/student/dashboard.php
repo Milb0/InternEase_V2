@@ -12,6 +12,14 @@ if (isset($_SESSION['user_type']) && $_SESSION['user_type'] !== 'student') {
 } elseif (!isset($_SESSION['user_type'])) {
     header("Location:../whoami.php");
 }
+if (isset($_GET['Type'])) {
+    $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
+    if ($safeType !== '0' &&  $safeType !== '1' &&  $safeType !== '5' && $safeType !== '3') {
+        $safeType = NULL;
+        header("location:error404.php");
+    }
+}
+
 $student = new Student($db_conn);
 $result = $student->getStudent($_SESSION['id']);
 ?>
@@ -107,13 +115,8 @@ $result = $student->getStudent($_SESSION['id']);
 <div class="p-4 sm:ml-64 h-screen pt-5 dark:bg-gray-800 dark:border-gray-700 flex flex-col">
     <div class="p-4 mt-14 flex-grow">
         <?php
-        if (isset($_GET['Type'])) {
-            $safeType = trim(filter_input(INPUT_GET, 'Type', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
-            if ($safeType === '0' || $safeType === '1' || $safeType === '5' || $safeType === '3') {
-                displayAlert($safeType);
-            } else {
-                header("location:error404.php");
-            }
+        if (isset($safeType)) {
+            displayAlert($safeType);
         }
         ?>
         <div class="flex justify-end mb-4">
@@ -131,13 +134,13 @@ $result = $student->getStudent($_SESSION['id']);
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
                     <tr>
                         <th scope="col" class="px-6 py-3">
-                            Internship Number
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Start Date
+                            Theme
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Period
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Start Date
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Status
@@ -156,69 +159,99 @@ $result = $student->getStudent($_SESSION['id']);
 
                     // Iterate over the requests and display them in the table
                     foreach ($requests as $request) {
-                        $internshipNumber = $request['id'];
-                        $startDate = $request['StartDate'];
+                        $theme = $request['theme'];
                         $period = $request['period'];
+                        $startDate = $request['StartDate'];
                         $status = $request['Status'];
+                        $url_slug = $request['url_slug'];
                         $actions = '';
 
                         // Generate appropriate status text
                         $statusText = '';
                         switch ($status) {
                             case 0:
-                                $statusText = 'Under Review';
+                                $statusText = 'Under Review by the University';
                                 break;
                             case 1:
-                                $statusText = 'Accepted by University';
+                                $statusText = 'Under Review by the Supervisor';
                                 break;
                             case 2:
-                                $statusText = 'Rejected with Reason by University';
+                                $statusText = 'University asked for an Edit';
                                 break;
                             case 3:
                                 $statusText = 'Rejected by University';
                                 break;
                             case 4:
-                                $statusText = 'Accepted by Company';
+                                $statusText = 'The Supervisor asked for an Edit';
                                 break;
                             case 5:
-                                $statusText = 'Rejected with Reason by Company';
+                                $statusText = 'Rejected by University';
                                 break;
                             case 6:
-                                $statusText = 'Rejected by Company';
-                                break;
-                            case 7:
-                                $statusText = 'Internship Realisation';
+                                $statusText = 'Realization Stage';
                                 break;
                         }
 
-                        // Generate appropriate actions buttons
-                        if ($status === '0') {
-                            $actions = '
-                   <div class="flex items-center space-x-2">
-                        <button onclick="toggleDetailsModal(' . $internshipNumber . ')" class="viewDetailsButton px-4 py-2 text-base relative">
-                            <i class="fa-solid fa-eye text-black hover:text-blue-800 dark:text-white hover:text-blue-400" title="View Details"></i>
-                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
-                        </button>
-                        <button class=" editDetailsButton px-4 py-2 text-base relative">
-                            <i class="fa-solid fa-pen-to-square text-black hover:text-blue-800 dark:text-white hover:text-blue-400"></i>
-                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Edit</span>
-
-                        </button>
-                        <button class=" deleteInternshipButton px-4 py-2 text-base relative">
-                            <i class="fa-solid fa-trash text-red-700"></i>
-                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">delete</span>
-                        </button>
-                    </div>
-                ';
-                        } else {
-                            $actions = '
-                    <div class="flex items-center space-x-2">
-                        <button onclick="toggleDetailsModal(' . $internshipNumber . ')" class="viewDetailsButton px-4 py-2 text-base relative">
-                            <i class="fa-solid fa-eye text-black hover:text-blue-800 dark:text-white hover:text-blue-400" title="View Details"></i>
-                            <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
-                        </button>
-                    </div>
-                ';
+                        switch ($status) {
+                            case '0':
+                            case '2':
+                            case '4':
+                                $actions = '
+                                <div class="flex items-center space-x-2">
+                                     <a href="http://localhost/internease/student/viewdetails.php?internship=' . $url_slug . '" class="viewDetailsButton px-4 py-2 text-base relative cursor-pointer ">
+                                         <i class="fa-solid fa-eye text-black hover:text-blue-400 dark:text-white" title="View Details"></i>
+                                         <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
+                                     </a>
+                                     <a  href="http://localhost/internease/student/editrequest.php?internship=' . $url_slug . '" class=" editDetailsButton px-4 py-2 text-base relative ">
+                                         <i class="fa-solid fa-pen-to-square text-black hover:text-blue-400 dark:text-white"></i>
+                                         <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Edit</span>
+                                     </a>
+                                     <a class=" deleteInternshipButton px-4 py-2 text-base relative hover:text-red-700" onclick="">
+                                         <i class="fa-solid fa-trash text-red-600 hover:text-red-700"></i>
+                                         <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">delete</span>
+                                     </a>
+                                 </div>
+                             ';
+                                break;
+                            case '1':
+                                $actions = '
+                                <div class="flex items-center space-x-2">
+                                     <a href="http://localhost/internease/student/viewdetails.php?internship=' . $url_slug . '" class="viewDetailsButton px-4 py-2 text-base relative cursor-pointer ">
+                                         <i class="fa-solid fa-eye text-black hover:text-blue-400 dark:text-white" title="View Details"></i>
+                                         <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
+                                     </a>
+                                 </div>
+                             ';
+                                break;
+                            case '3':
+                            case '5':
+                                $actions = '
+                                <div class="flex items-center space-x-2">
+                                <a href="http://localhost/internease/student/viewdetails.php?internship=' . $url_slug . '" class="viewDetailsButton px-4 py-2 text-base relative cursor-pointer ">
+                                <i class="fa-solid fa-eye text-black hover:text-blue-400 dark:text-white" title="View Details"></i>
+                                <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
+                            </a>
+                                     <button class=" deleteInternshipButton px-4 py-2 text-base relative hover:text-red-700" onclick="">
+                                         <i class="fa-solid fa-trash text-red-600 hover:text-red-700"></i>
+                                         <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">delete</span>
+                                     </button>
+                                 </div>
+                             ';
+                                break;
+                            case '6':
+                                $actions = '
+                                <div class="flex items-center space-x-2">
+                                <a href="http://localhost/internease/student/viewdetails.php?internship=' . $url_slug . '" class="viewDetailsButton px-4 py-2 text-base relative cursor-pointer ">
+                                <i class="fa-solid fa-eye text-black hover:text-blue-400 dark:text-white" title="View Details"></i>
+                                <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">View Details</span>
+                            </a>
+                                     <button class=" attendanceButton px-4 py-2 text-base relative ">
+                                            <i class="fa-solid fa-ballot-check text-black hover:text-blue-400 dark:text-white"></i>
+                                         <span class="absolute top-2 left-1/2 -translate-x-1/2 transform -translate-y-full text-xs bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400 px-2 py-1 rounded-md whitespace-nowrap">Check your Presence</span>
+                                     </button>
+                                 </div>
+                             ';
+                                break;
                         }
 
 
@@ -226,13 +259,13 @@ $result = $student->getStudent($_SESSION['id']);
                         echo '
                 <tr class="bg-white  odd:bg-white even:bg-slate-50 dark:bg-gray-800 dark:odd:bg-gray-800 dark:even:bg-gray-600">
                 <td class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-white">
-                ' . $internshipNumber . '
+                ' . $theme . '
+                </td>
+                <td class="px-6 py-4 dark:text-white">
+                ' . $period . ' Days ' . '
                 </td>
                 <td class="px-6 py-4 dark:text-white">
                 ' . $startDate . '
-                </td>
-                <td class="px-6 py-4 dark:text-white">
-                ' . $period . '
                 </td>
                 <td class="px-6 py-4 dark:text-white">
                 ' . $statusText . '
